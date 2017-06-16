@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "430787893439",
+    "project_id": "plivoandroid"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:430787893439:android:9f963c97b4fc03a4",
+        "android_client_info": {
+          "package_name": "com.plivo.voicetest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "430787893439-ikopkpg75qqknaa5fk486m3h36mv0d4s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.plivo.voicetest",
+            "certificate_hash": "c66ec6df3be40f32cde3bd7ef17c6fd3e25ffed8"
+          }
+        },
+        {
+          "client_id": "430787893439-b52u83j7gcj8m9m2dsh7o2v30l3eocn2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJX3jVE0JVkQBf9MvBO_YbM1TVucPyBHs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
