@@ -2,11 +2,15 @@ package com.plivo.voicetest.Activities;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +24,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
@@ -69,11 +74,34 @@ public class MainActivity extends AppCompatActivity implements EndPointListner, 
 
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra("key");
+            Log.d("MainActivity", "Refreshed token: " + message);
+            sendRegistrationToServer(message);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                mMessageReceiver, new IntentFilter("intentKey"));
+
+        try {
+            final String refreshToken = FirebaseInstanceId.getInstance().getToken();
+            Log.d("MainActivity", "Refreshed token: " + refreshToken);
+            if (refreshToken != null) {
+                sendRegistrationToServer(refreshToken);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         this.requestAppPermissions();
 
@@ -114,6 +142,12 @@ public class MainActivity extends AppCompatActivity implements EndPointListner, 
 
 
         }
+
+    }
+
+    public void sendRegistrationToServer(final String token) {
+
+        Toast.makeText(this, "Token: "+token, Toast.LENGTH_SHORT).show();
 
     }
 

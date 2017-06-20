@@ -47,13 +47,15 @@
         </activity>
         <activity android:name=".Activities.TabsContainer" />
 
-        <service android:name=".Helpers.MyFirebaseMessagingService">
+        <service
+            android:name=".Helpers.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
 
-        <service android:name=".Helpers.FirebaseIDService">
+        <service
+            android:name=".Helpers.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
