@@ -4,12 +4,9 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -70,13 +67,15 @@ public class MainActivity extends AppCompatActivity implements EndPointListner, 
 
     ProgressDialog progress;
 
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.requestPermissions();
+        this.requestAppPermissions();
 
         progress = new ProgressDialog(MainActivity.this);
 
@@ -241,113 +240,19 @@ public class MainActivity extends AppCompatActivity implements EndPointListner, 
 
     }
 
-    public  void  requestPermissions()
+
+
+    public  void  requestAppPermissions()
     {
-        // Here, thisActivity is the current activity
-        if (ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.RECORD_AUDIO)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.RECORD_AUDIO},1);
-        }
-
-        // Here, thisActivity is the current activity
-        if (ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.READ_CONTACTS},1);
-        }
-
-        if (ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.MODIFY_AUDIO_SETTINGS)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.MODIFY_AUDIO_SETTINGS},1);
-        }
-
-        if (ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.PROCESS_OUTGOING_CALLS)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.PROCESS_OUTGOING_CALLS},1);
-        }
-
-        if (ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.WRITE_SETTINGS)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.WRITE_SETTINGS},1);
-        }
-
-        if (ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.READ_PHONE_STATE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.READ_PHONE_STATE},1);
-        }
-
-        if (ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.ACCESS_WIFI_STATE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.ACCESS_WIFI_STATE},1);
-        }
-
-        if (ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.ACCESS_NETWORK_STATE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.ACCESS_NETWORK_STATE},1);
-        }
-
-        if (ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.WAKE_LOCK)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.WAKE_LOCK},1);
-        }
-
-        if (ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.VIBRATE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.VIBRATE},1);
-        }
-
-        if (ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.READ_LOGS)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.READ_LOGS},1);
-        }
-
-        if (ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.USE_SIP)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.USE_SIP},1);
-        }
-
-        if (ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-        }
+        requestPermissions(new String[]{
+                        Manifest.permission.READ_CONTACTS,
+                        Manifest.permission.RECORD_AUDIO,Manifest.permission.MODIFY_AUDIO_SETTINGS,
+                        Manifest.permission.PROCESS_OUTGOING_CALLS,Manifest.permission.WRITE_SETTINGS,
+                        Manifest.permission.READ_PHONE_STATE,Manifest.permission.ACCESS_WIFI_STATE,
+                        Manifest.permission.ACCESS_NETWORK_STATE,Manifest.permission.WAKE_LOCK,
+                        Manifest.permission.VIBRATE,Manifest.permission.READ_LOGS,Manifest.permission.USE_SIP,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,},
+                REQUEST_CODE_ASK_PERMISSIONS);
 
     }
 
@@ -456,29 +361,3 @@ public class MainActivity extends AppCompatActivity implements EndPointListner, 
     }
 
 }
-//        ArrayList<RecentCall> recentCallsArrayList = new ArrayList<RecentCall>();
-//
-//        for(int i=0; i< 10;i++)
-//        {
-//            RecentCall recentCall = new RecentCall();
-//            recentCall.setPhone("918686198299");
-//            recentCall.setTime("4 hrs. ago");
-//            recentCallsArrayList.add(recentCall);
-//        }
-//
-//        SharedPreferences db = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
-//
-//        SharedPreferences.Editor collection = db.edit();
-//        Gson gson = new GsonBuilder()
-//                .registerTypeAdapter(RecentCall.class, new MyTypeAdapter<RecentCall>())
-//                .create();
-//        if (gson != null)
-//        {
-//            String arrayList1 = gson.toJson(recentCallsArrayList);
-//            collection.putString("RecentCallsInfo", arrayList1);
-//            collection.commit();
-//        }
-//        else
-//        {
-//            Log.d("gson","nil");
-//        }
