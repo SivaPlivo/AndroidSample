@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements EndPointListner, 
 
     public void sendRegistrationToServer(final String token) {
 
-        Toast.makeText(this, "Token: "+token, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Token: "+token, Toast.LENGTH_SHORT).show();
 
     }
 
