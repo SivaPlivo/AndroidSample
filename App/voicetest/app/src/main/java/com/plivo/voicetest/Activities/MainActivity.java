@@ -74,13 +74,15 @@ public class MainActivity extends AppCompatActivity implements EndPointListner, 
 
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
+    public String fireBaseToken;
+
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             String message = intent.getStringExtra("key");
             Log.d("MainActivity", "Refreshed token: " + message);
-            sendRegistrationToServer(message);
+            fireBaseToken = message;
         }
     };
 
@@ -97,7 +99,8 @@ public class MainActivity extends AppCompatActivity implements EndPointListner, 
             final String refreshToken = FirebaseInstanceId.getInstance().getToken();
             Log.d("MainActivity", "Refreshed token: " + refreshToken);
             if (refreshToken != null) {
-                sendRegistrationToServer(refreshToken);
+                fireBaseToken = refreshToken;
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -147,7 +150,15 @@ public class MainActivity extends AppCompatActivity implements EndPointListner, 
 
     public void sendRegistrationToServer(final String token) {
 
-        //Toast.makeText(this, "Token: "+token, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Token: "+token, Toast.LENGTH_SHORT).show();
+
+        try {
+
+            endpoint.registerToken(token);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -210,6 +221,8 @@ public class MainActivity extends AppCompatActivity implements EndPointListner, 
         {
             public void run()
             {
+                sendRegistrationToServer(fireBaseToken);
+
                 // To dismiss the dialog
                 progress.dismiss();
 

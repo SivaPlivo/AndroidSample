@@ -11,6 +11,8 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.plivo.endpoint.Incoming;
+import com.plivo.endpoint.Outgoing;
 import com.plivo.voicetest.Activities.MainActivity;
 import com.plivo.voicetest.R;
 
@@ -18,7 +20,7 @@ import com.plivo.voicetest.R;
  * Created by Siva on 19/06/17.
  */
 
-public class MyFirebaseMessagingService extends FirebaseMessagingService {
+public class MyFirebaseMessagingService extends FirebaseMessagingService implements EndPointListner {
 
     private static final String TAG = "MyFirebaseMsgService";
 
@@ -46,8 +48,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         // Check if message contains a notification payload.
         if (remoteMessage.getData() != null){
-            Log.d(TAG,"Message Data Body ");
+            Log.d("Token Data title:" + remoteMessage.getData().get("title"),"Message Data Body "+remoteMessage.getData().get("msg"));
             sendNotification(remoteMessage.getData().get("title"),remoteMessage.getData().get("msg"));
+
+            //Phone.getInstance(this).endpoint.relayVoipPushNotification(remoteMessage.getData().get("msg"));
         }
 
         if (remoteMessage.getNotification() != null) {
@@ -91,6 +95,63 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
+
+    public void onLogin() {
+
+        Log.d("PlivoInbound", "Logging in");
+
+    }
+
+    public void onLogout() {
+
+        Log.d("PlivoInbound", "Logged out");
+
+    }
+
+    public void onLoginFailed() {
+
+        Log.d("PlivoInbound", "Login failed");
+
+    }
+
+    public void onIncomingCall(Incoming incoming) {
+
+        Log.d("FCM", "Incoming call received");
+
+    }
+
+    public void onIncomingCallHangup(Incoming incoming) {
+
+    }
+
+    public void onIncomingCallRejected(Incoming incoming) {
+
+    }
+
+    public void onOutgoingCall(Outgoing outgoing) {
+
+    }
+
+    public void onOutgoingCallAnswered(Outgoing outgoing) {
+
+    }
+
+    public void onOutgoingCallRejected(Outgoing outgoing) {
+
+    }
+
+    public void onOutgoingCallHangup(Outgoing outgoing) {
+
+    }
+
+    public void onOutgoingCallInvalid(Outgoing outgoing){
+
+    }
+
+    public void onIncomingDigitNotification(String digits) {
+
+    }
+
 }
 
 
