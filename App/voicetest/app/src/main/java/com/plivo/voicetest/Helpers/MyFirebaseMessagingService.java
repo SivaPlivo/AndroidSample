@@ -1,20 +1,13 @@
 package com.plivo.voicetest.Helpers;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.plivo.endpoint.Incoming;
 import com.plivo.endpoint.Outgoing;
-import com.plivo.voicetest.Activities.MainActivity;
-import com.plivo.voicetest.R;
+
+import java.util.Map;
 
 /**
  * Created by Siva on 19/06/17.
@@ -47,53 +40,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService impleme
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
         // Check if message contains a notification payload.
-        if (remoteMessage.getData() != null){
-            Log.d("Token Data title:" + remoteMessage.getData().get("title"),"Message Data Body "+remoteMessage.getData().get("msg"));
-            sendNotification(remoteMessage.getData().get("title"),remoteMessage.getData().get("msg"));
+        if (remoteMessage.getData() != null)
+        {
+            Map<String, String> msgData = remoteMessage.getData();
 
-            //Phone.getInstance(this).endpoint.relayVoipPushNotification(remoteMessage.getData().get("msg"));
+            Log.d("Token Data title:" + remoteMessage.getData().get("title"),"Message Data Body "+remoteMessage.getData());
+            Phone.getInstance(this).endpoint.relayVoipPushNotification(msgData);
         }
 
-        if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            // Also if you intend on generating your own notifications as a result of a received FCM
-            // message, here is where that should be initiated. See sendNotification method below.
-            sendNotification("Plivo Notification",remoteMessage.getNotification().getBody());
-        }
-    }
-
-    /**
-     * Handle time allotted to BroadcastReceivers.
-     */
-    private void handleNow() {
-        Log.d(TAG, "Short lived task is done.");
-    }
-
-    /**
-     * Create and show a simple notification containing the received FCM message.
-     *
-     * @param messageBody FCM message body received.
-     */
-    private void sendNotification(String title,String messageBody) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(title)
-                .setContentText(messageBody)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
 
     public void onLogin() {
@@ -185,3 +139,47 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService impleme
         dispatcher.schedule(myJob);
         // [END dispatch_job]
     }*/
+
+
+/**
+ //     * Handle time allotted to BroadcastReceivers.
+ //     */
+//    private void handleNow() {
+//        Log.d(TAG, "Short lived task is done.");
+//    }
+//
+//    /**
+//     * Create and show a simple notification containing the received FCM message.
+//     *
+//     * @param messageBody FCM message body received.
+//     */
+//    private void sendNotification(String title,String messageBody) {
+//        Intent intent = new Intent(this, MainActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+//                PendingIntent.FLAG_ONE_SHOT);
+//
+//        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//
+//        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+//                .setSmallIcon(R.mipmap.ic_launcher)
+//                .setContentTitle(title)
+//                .setContentText(messageBody)
+//                .setAutoCancel(true)
+//                .setSound(defaultSoundUri)
+//                .setContentIntent(pendingIntent);
+//
+//        NotificationManager notificationManager =
+//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+//    }
+
+
+//        if (remoteMessage.getNotification() != null) {
+//            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+//            // Also if you intend on generating your own notifications as a result of a received FCM
+//            // message, here is where that should be initiated. See sendNotification method below.
+//            Map<String, String> msgData = remoteMessage.getData();
+//            Phone.getInstance(this).endpoint.relayVoipPushNotification(msgData);
+//        }
