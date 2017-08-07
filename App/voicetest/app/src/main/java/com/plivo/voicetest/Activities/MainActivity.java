@@ -156,12 +156,6 @@ public class MainActivity extends AppCompatActivity implements EndPointListner, 
 
             endpoint.registerToken(token);
 
-//            sleep(4);
-//
-//            Log.d("RelayVoip","Called");
-//
-//            endpoint.relayVoipPushNotification("label:label,index:index,registrar:iOSApp170426075413");
-
         } catch (Exception e) {
             e.printStackTrace();
         }
