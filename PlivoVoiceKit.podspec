@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "PlivoVoiceKit"
-  s.version      = "0.3.0"
+  s.version      = "0.4.0"
 s.summary          = 'Plivo Voice SDK for iOS'
 s.description      = 'The Plivo iOS SDK allows you to create applications capable of making and receiving calls in your iOS app.'
 s.homepage         = 'https://www.plivo.com/'
