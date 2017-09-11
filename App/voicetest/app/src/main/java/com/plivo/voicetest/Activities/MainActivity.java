@@ -150,6 +150,10 @@ public class MainActivity extends AppCompatActivity implements EndPointListner, 
 
     public void sendRegistrationToServer(final String token) {
 
+        Log.d("Device Token ","is:"+token);
+        Log.v("Device Token ","is:"+token);
+        Log.e("Device Token ","is:"+token);
+
         Toast.makeText(this, "Token: "+token, Toast.LENGTH_SHORT).show();
 
         try {
